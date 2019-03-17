@@ -8,17 +8,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.view.menu.MenuPopupHelper;
+import android.support.v7.widget.PopupMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.support.v7.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.laioffer.tinnews.common.TinBasicActivity;
+import com.laioffer.tinnews.common.TinBasicFragment;
 
 public class WebViewActivity extends TinBasicActivity implements PopupMenu.OnMenuItemClickListener{
     public static final String URL = "url";
@@ -111,6 +112,11 @@ public class WebViewActivity extends TinBasicActivity implements PopupMenu.OnMen
         }
         return true;
     }
+
+    @Override
+    public void doFragmentTransaction(TinBasicFragment basicFragment) {
+    }
+
 
     @Override
     public void showSnackBar(String message) {
