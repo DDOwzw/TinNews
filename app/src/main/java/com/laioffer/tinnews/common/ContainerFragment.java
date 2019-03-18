@@ -7,10 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.laioffer.tinnews.R;
 import com.laioffer.tinnews.save.SavedNewsFragment;
+import com.laioffer.tinnews.tin.TinGalleryFragment;
 
 public class ContainerFragment extends TinBasicFragment {
     public static final int HOME_PAGE = 0;
@@ -73,8 +73,9 @@ public class ContainerFragment extends TinBasicFragment {
 
     private static Fragment createInitFragmentByIndex(int pageIndex) {
         switch (pageIndex) {
+            //replace the null with TinGalleryFragment
             case HOME_PAGE:
-                return null;
+                return TinGalleryFragment.newInstance();
             case SAVE_PAGE:
                 return SavedNewsFragment.newInstance();
             case PROFILE_PAGE:
@@ -83,5 +84,6 @@ public class ContainerFragment extends TinBasicFragment {
                 throw new IndexOutOfBoundsException();
         }
     }
+
 
 }
