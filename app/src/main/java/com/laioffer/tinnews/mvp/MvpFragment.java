@@ -1,9 +1,10 @@
 package com.laioffer.tinnews.mvp;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
 import com.laioffer.tinnews.common.TinBasicFragment;
+
+import io.reactivex.annotations.Nullable;
 
 public abstract class MvpFragment<P extends  MvpContract.Presenter> extends TinBasicFragment implements MvpContract.View<P> {
 

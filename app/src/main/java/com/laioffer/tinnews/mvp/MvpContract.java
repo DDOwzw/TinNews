@@ -13,6 +13,8 @@ public interface MvpContract {
         void onViewAttached(V view);
 
         void onViewDetached();
+
+        void onError();
     }
 
     interface Model<P extends  Presenter> {
