@@ -15,7 +15,6 @@ public class SavedNewsPresenter implements SavedNewsContract.Presenter {
 
     @Override
     public void onCreate() {
-
     }
 
     @Override
@@ -26,7 +25,9 @@ public class SavedNewsPresenter implements SavedNewsContract.Presenter {
     @Override
     public void onViewAttached(SavedNewsContract.View view) {
         this.view = view;
-        this.model.fetchData();
+        if (view.isViewEmpty()) {
+            this.model.fetchData();
+        }
     }
 
     @Override
@@ -35,10 +36,14 @@ public class SavedNewsPresenter implements SavedNewsContract.Presenter {
     }
 
     @Override
+    public void onError() {
+
+    }
+
+    @Override
     public void loadSavedNews(List<News> newsList) {
         if (view != null) {
             view.loadSavedNews(newsList);
         }
     }
-
 }

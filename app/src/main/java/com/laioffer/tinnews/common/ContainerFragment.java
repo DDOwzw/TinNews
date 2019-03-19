@@ -1,5 +1,3 @@
-
-
 package com.laioffer.tinnews.common;
 
 import android.os.Bundle;
@@ -9,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.laioffer.tinnews.R;
+import com.laioffer.tinnews.profile.TinProfileFragment;
 import com.laioffer.tinnews.save.SavedNewsFragment;
 import com.laioffer.tinnews.tin.TinGalleryFragment;
 
@@ -78,12 +77,13 @@ public class ContainerFragment extends TinBasicFragment {
                 return TinGalleryFragment.newInstance();
             case SAVE_PAGE:
                 return SavedNewsFragment.newInstance();
+
+            //1.4
             case PROFILE_PAGE:
-                return null;
+                return TinProfileFragment.newInstance();
             default:
                 throw new IndexOutOfBoundsException();
         }
     }
-
 
 }

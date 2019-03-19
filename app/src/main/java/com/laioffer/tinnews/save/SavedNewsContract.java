@@ -5,14 +5,14 @@ import com.laioffer.tinnews.retrofit.response.News;
 
 import java.util.List;
 
-//1.1 1.2 Create a new SavedNewsContract interface under save folder
 public interface SavedNewsContract {
 
     interface View extends MvpContract.View<Presenter> {
         void loadSavedNews(List<News> newsList);
+        boolean isViewEmpty();
     }
 
-    interface Presenter extends  MvpContract.Presenter<View, Model> {
+    interface Presenter extends MvpContract.Presenter<View, Model> {
         void loadSavedNews(List<News> newsList);
     }
 

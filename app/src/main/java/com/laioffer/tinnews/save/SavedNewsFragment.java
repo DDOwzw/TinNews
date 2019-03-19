@@ -1,25 +1,34 @@
 package com.laioffer.tinnews.save;
 
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.laioffer.tinnews.R;
+import com.laioffer.tinnews.common.BaseViewModel;
+import com.laioffer.tinnews.common.ViewModelAdapter;
 import com.laioffer.tinnews.mvp.MvpFragment;
 import com.laioffer.tinnews.retrofit.response.News;
-import com.laioffer.tinnews.save.detail.SavedNewsDetailedFragment;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> implements SavedNewsContract.View {
-    private TextView author;
-    private TextView description;
+
+    private ViewModelAdapter savedNewsAdapter;
+    private LinearLayoutManager linearLayoutManager;
+    private TextView emptyState;
+    private int initPosition = -1;
+
 
     public static SavedNewsFragment newInstance() {
         Bundle args = new Bundle();
@@ -33,47 +42,20 @@ public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> 
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_saved_news, container, false);
-
-        author = view.findViewById(R.id.author);
-        description = view.findViewById(R.id.description);
-        description.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tinFragmentManager.doFragmentTransaction(SavedNewsDetailedFragment.newInstance());
-            }
-        });
-
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        emptyState = view.findViewById(R.id.empty_state);
+        if (isViewEmpty()) {
+            emptyState.setVisibility(View.VISIBLE);
+        } else {
+            emptyState.setVisibility(View.GONE);
+        }
+        if (savedNewsAdapter == null) {
+            savedNewsAdapter = new ViewModelAdapter();
+        }
+        recyclerView.setAdapter(savedNewsAdapter);
         return view;
-    }
-    //lifecycle code starts from here
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 
     @Override
@@ -83,13 +65,28 @@ public class SavedNewsFragment extends MvpFragment<SavedNewsContract.Presenter> 
 
     @Override
     public void loadSavedNews(List<News> newsList) {
-        // Show the latest news on the text
-        if (newsList.size() > 0) {
-            News news = newsList.get(newsList.size() - 1);
-            author.setText(news.getAuthor());
-            description.setText(news.getDescription());
+        if (newsList.size() == 0) {
+            emptyState.setVisibility(View.VISIBLE);
+        } else {
+            emptyState.setVisibility(View.GONE);
         }
+        if (newsList != null) {
+            List<BaseViewModel> models = new LinkedList<>();
+            for (News news: newsList) {
+                models.add(new SavedNewsViewModel(news, tinFragmentManager));
+            }
+            savedNewsAdapter.addViewModels(models);
+        }
+    }
 
+    @Override
+    public boolean isViewEmpty() {
+        return savedNewsAdapter == null || savedNewsAdapter.isEmpty();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        initPosition = linearLayoutManager.findFirstVisibleItemPosition();
     }
 }
-
