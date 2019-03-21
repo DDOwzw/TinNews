@@ -18,5 +18,6 @@ public interface SavedNewsContract {
 
     interface Model extends MvpContract.Model<Presenter> {
         void fetchData();
+        void saveFavoriteNews(News news);
     }
 }

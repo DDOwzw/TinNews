@@ -1,5 +1,6 @@
 package com.laioffer.tinnews.save;
 
+import android.support.annotation.DrawableRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
